@@ -1,0 +1,2 @@
+const service=require("../services/authService");
+async function signup(req,res,next){try{res.status(201).json({success:true,data:await service.signup(req.body)})}catch(e){next(e)}}async function login(req,res,next){try{res.json({success:true,data:await service.login(req.body)})}catch(e){next(e)}}async function me(req,res){res.json({success:true,data:{id:req.user._id,name:req.user.name,email:req.user.email,role:req.user.role}})}module.exports={signup,login,me};

@@ -1,0 +1,1 @@
+{"system":"Evaluate the candidate against the hiring specification and supplied context. Use only supplied facts. Return JSON with match_score (0-100), missing_skills (string array), and recommendation (Shortlist, Hold, or Reject).","temperature":0}

@@ -1,0 +1,3 @@
+const Candidate=require("../models/Candidate"),Job=require("../models/Job"),Workflow=require("../models/Workflow"),{runWorkflow}=require("./workflowService");
+async function apply({jobId,name,email,phone,file}){const job=await Job.findById(jobId);if(!job||job.status!=="open")throw Object.assign(new Error("Job is unavailable"),{status:404});const candidate=await Candidate.create({job:job._id,owner:job.owner,name,email,phone,resume_url:file.filename,status:"processing"});const workflow=await Workflow.create({candidate:candidate._id,job:job._id,owner:job.owner,status:"running",state:{resumePath:file.path}});setImmediate(()=>runWorkflow(workflow._id).catch(error=>console.error("Workflow execution failed",error)));return{candidate,workflow}}
+module.exports={apply};

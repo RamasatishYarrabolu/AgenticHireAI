@@ -1,0 +1,1 @@
+{"system":"Create a structured interview kit for the supplied role and hiring specification. Return JSON with rounds (array of objects containing title, questions, coding_task, and rubric). Do not introduce requirements outside the specification.","temperature":0.2}

@@ -1,0 +1,1 @@
+require("dotenv").config();const app=require("./app"),{connectDatabase}=require("./config/db");const port=process.env.PORT||5000;connectDatabase().then(()=>app.listen(port,()=>console.log(`Recruitment API listening on ${port}`))).catch(error=>{console.error("Startup failed:",error.message);process.exit(1)});

@@ -1,0 +1,9 @@
+const{z}=require("zod");
+const signup=z.object({name:z.string().trim().min(1).max(120),email:z.string().email().max(254),password:z.string().min(8).max(128)});
+const login=z.object({email:z.string().email(),password:z.string().min(1)});
+const job=z.object({title:z.string().trim().min(2).max(180),description:z.string().trim().min(10).max(12000),location:z.string().max(180).optional(),required_skills:z.array(z.string().trim().min(1).max(80)).min(1),preferred_skills:z.array(z.string().trim().min(1).max(80)).default([]),min_experience:z.number().min(0).max(60).default(0)});
+const application=z.object({jobId:z.string().regex(/^[a-f\d]{24}$/i),name:z.string().trim().min(2).max(120),email:z.string().email().max(254),phone:z.string().max(40).optional()});
+const approve=z.object({workflowId:z.string().regex(/^[a-f\d]{24}$/i),decision:z.enum(["approve","reject"])});
+const retry=z.object({workflowId:z.string().regex(/^[a-f\d]{24}$/i)});
+const start=retry;
+module.exports={signup,login,job,application,approve,retry,start};

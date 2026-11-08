@@ -1,0 +1,5 @@
+const bcrypt=require("bcryptjs"),jwt=require("jsonwebtoken"),User=require("../models/User"),{loadSpec}=require("../config/specs");
+const tokenFor=user=>jwt.sign({sub:user._id.toString(),role:user.role},process.env.JWT_SECRET,{expiresIn:"12h"});
+async function signup(data){const exists=await User.findOne({email:data.email.toLowerCase()});if(exists)throw Object.assign(new Error("Email is already registered"),{status:409});const roles=loadSpec("system/roles.json");const user=await User.create({name:data.name,email:data.email,password:await bcrypt.hash(data.password,12),role:roles.default_signup_role});return{user:{id:user._id,name:user.name,email:user.email,role:user.role},token:tokenFor(user)}}
+async function login(data){const user=await User.findOne({email:data.email.toLowerCase()}).select("+password");if(!user||!await bcrypt.compare(data.password,user.password))throw Object.assign(new Error("Invalid email or password"),{status:401});return{user:{id:user._id,name:user.name,email:user.email,role:user.role},token:tokenFor(user)}}
+module.exports={signup,login,tokenFor};

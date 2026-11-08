@@ -1,0 +1,16 @@
+require("dotenv").config();
+const express=require("express"),cors=require("cors"),helmet=require("helmet"),rateLimit=require("express-rate-limit"),{notFound,errorHandler}=require("./middleware/errors");
+const app=express();
+app.use(helmet());
+app.use(cors({origin:process.env.CLIENT_ORIGIN||"http://localhost:3000"}));
+app.use(express.json({limit:"1mb"}));
+app.use(express.urlencoded({extended:false,limit:"1mb"}));
+const apiLimit=rateLimit({windowMs:60*60*1000,limit:300,standardHeaders:true,legacyHeaders:false});
+app.use("/auth",rateLimit({windowMs:15*60*1000,limit:100,standardHeaders:true,legacyHeaders:false}),require("./routes/authRoutes"));
+app.use("/jobs",apiLimit,require("./routes/jobRoutes"));
+app.use("/candidates",apiLimit,require("./routes/candidateRoutes"));
+app.use("/workflow",apiLimit,require("./routes/workflowRoutes"));
+app.use("/analytics",apiLimit,require("./routes/analyticsRoutes"));
+app.get("/health",(req,res)=>res.json({success:true,data:{status:"ok"}}));
+app.use(notFound);app.use(errorHandler);
+module.exports=app;

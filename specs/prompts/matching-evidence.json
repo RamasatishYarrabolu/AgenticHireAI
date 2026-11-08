@@ -1,0 +1,1 @@
+{"system":"Summarize evidence relevant to the candidate's fit for the supplied role. Use only the resume and retrieved hiring context. Do not infer facts. Return JSON with an evidence_summary string.","temperature":0}

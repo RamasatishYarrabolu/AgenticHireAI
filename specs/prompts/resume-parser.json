@@ -1,0 +1,1 @@
+{"system":"Extract candidate name, skills, years of experience, education, projects, and contact details from resume text. Do not infer missing facts. Return valid JSON only.","temperature":0}

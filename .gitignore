@@ -1,0 +1,10 @@
+node_modules/
+.next/
+coverage/
+client/.env.local
+server/.env
+server/uploads/*
+!server/uploads/.gitkeep
+server/logs/*
+!server/logs/.gitkeep
+npm-debug.log*
